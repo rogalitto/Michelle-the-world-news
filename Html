@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Michelle The World News</title>
+<style>
+  /* Reset */
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f8ff;
+    color: #222;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  header {
+    background: linear-gradient(90deg, #4c9aff, #1d60ff);
+    color: white;
+    padding: 20px 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 3px 8px rgb(29 96 255 / 0.4);
+  }
+
+  /* Logo */
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .logo svg {
+    width: 100%;
+    height: 100%;
+    fill: white;
+  }
+
+  h1 {
+    font-weight: 900;
+    font-size: 1.7rem;
+    user-select: none;
+  }
+
+  main {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 15px;
+  }
+
+  article {
+    background: white;
+    padding: 20px;
+    margin-bottom: 40px;
+    border-radius: 8px;
+    box-shadow: 0 3px 7px rgb(0 0 0 / 0.1);
+  }
+
+  article h2 {
+    color: #1d60ff;
+    margin-bottom: 12px;
+  }
+
+  article p {
+    margin-bottom: 15px;
+    font-size: 1.05rem;
+  }
+
+  article img {
+    max-width: 100%;
+    border-radius: 6px;
+    margin-bottom: 15px;
+  }
+
+  article video {
+    width: 100%;
+    border-radius: 6px;
+    margin-bottom: 15px;
+  }
+
+  /* Komentarze */
+  .comments {
+    margin-top: 20px;
+  }
+
+  .comments h3 {
+    margin-bottom: 12px;
+    color: #4c9aff;
+  }
+
+  .comment-list {
+    list-style: none;
+    margin-bottom: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+  }
+
+  .comment-list li {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 0.95rem;
+  }
+
+  .comment-list li:last-child {
+    border-bottom: none;
+  }
+
+  form.comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  form.comment-form input[type="text"],
+  form.comment-form textarea {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    font-size: 1rem;
+    resize: vertical;
+  }
+
+  form.comment-form button {
+    width: 120px;
+    padding: 10px;
+    background: #1d60ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: background 0.3s;
+  }
+
+  form.comment-form button:hover {
+    background: #1461d6;
+  }
+
+  footer {
+    text-align: center;
+    padding: 15px;
+    background: #1d60ff;
+    color: white;
+    font-size: 0.9rem;
+    margin-top: 40px;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    h1 {
+      font-size: 1.4rem;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo" aria-label="Logo Michelle The World News">
+    <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" >
+      <circle cx="32" cy="32" r="30" stroke="white" stroke-width="4" fill="none"/>
+      <path d="M20 44 L44 20 M20 20 L44 44" stroke="white" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <h1>Michelle The World News</h1>
+</header>
+
+<main>
+
+<article id="article-1">
+  <h2>Witamy na Michelle The World News!</h2>
+  <p>To jest twoja nowoczesna gazeta internetowa, w której możesz publikować teksty, zdjęcia i video.</p>
+  <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=80" alt="Przykładowe zdjęcie newsowe" />
+  <video controls src="https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"></video>
+  
+  <section class="comments">
+    <h3>Komentarze</h3>
+    <ul class="comment-list"></ul>
+    <form class="comment-form">
+      <input type="text" name="name" placeholder="Twoje imię" required />
+      <textarea name="comment" placeholder="Twój komentarz" rows="3" required></textarea>
+      <button type="submit">Dodaj komentarz</button>
+    </form>
+  </section>
+</article>
+
+</main>
+
+<footer>
+  &copy; 2025 Michelle The World News. Wszystkie prawa zastrzeżone.
+</footer>
+
+<script>
+  // Proste komentarze lokalne, bez backendu
+  const commentForm = document.querySelector('.comment-form');
+  const commentList = document.querySelector('.comment-list');
+
+  function loadComments() {
+    const saved = localStorage.getItem('comments');
+    if (!saved) return;
+    const comments = JSON.parse(saved);
+    commentList.innerHTML = '';
+    comments.forEach(c => {
+      const li = document.createElement('li');
+      li.textContent = c.name + ': ' + c.comment;
+      commentList.appendChild(li);
+    });
+  }
+
+  commentForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = commentForm.name.value.trim();
+    const comment = commentForm.comment.value.trim();
+    if (!name || !comment) return;
+
+    const saved = localStorage.getItem('comments');
+    const comments = saved ? JSON.parse(saved) : [];
+
+    comments.push({ name, comment });
+    localStorage.setItem('comments', JSON.stringify(comments));
+    loadComments();
+
+    commentForm.reset();
+  });
+
+  loadComments();
+</script>
+
+</body>
+</html>
